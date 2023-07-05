@@ -42,7 +42,7 @@ Output:
 0.845303
 -0.0957723
 ```
-**NOTE:** Normalizing each input feature as I have done above almost always yields faster loss convergence. This is due to the [sigmoid activation function's](https://en.wikipedia.org/wiki/Sigmoid_function) sensitivity to extreme neuron activations.
+**NOTE:** Normalizing each input feature as done above almost always yields faster loss convergence. This is due to the [sigmoid activation function's](https://en.wikipedia.org/wiki/Sigmoid_function) sensitivity to extreme neuron activations. Typically, this is done by subtracting the feature mean from each value.
 
 <br>
 
