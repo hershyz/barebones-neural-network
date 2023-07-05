@@ -3,6 +3,9 @@ Barebones, performance-oriented neural network & backpropagation algorithm in &l
 
 <br>
 
+### Diagram:
+![Diagram](https://raw.githubusercontent.com/hershyz/barebones-neural-network/main/diagram.png)
+
 ### Example Usage:
 ```C++
 // required imports
