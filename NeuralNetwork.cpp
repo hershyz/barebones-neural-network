@@ -54,8 +54,9 @@ public:
     vector<vector<double>> activations;                                 // 2d array of activations, each row represents a layer
     unordered_map<vector<vector<int>>, double, Vector2DHash> weights;   // [[r1, c1], [r2, c2]] : weight (between two neurons)
     unordered_map<vector<int>, double, VectorHash> biases;              // [r1, c1] : bias (per neuron)
-    double weightLearnConst = 0.001;                                    // learning rate for updating weights during backpropagation
-    double biasLearnConst = 0.001;                                      // learning rate for updating biases during backpropagation
+    double weightLearnConst = 0.001;                                    // weight "derivative"
+    double biasLearnConst = 0.001;                                      // bias "derivative"
+    double learningRate = 0.05;                                         // learning rate
 };
 
 // initialization sequence
@@ -196,7 +197,7 @@ void NeuralNetwork::fit(vector<vector<double>>& x, vector<double>& y, int epochs
                 biases[{layerLevel, i}] = testBias;
                 double testPrediction = predict(x[index]);
                 double lossDiff = MSE(testPrediction, y[index]) - loss;
-                prevBias -= loss * lossDiff;
+                prevBias -= learningRate * loss * lossDiff;
                 biases[{layerLevel, i}] = prevBias;
 
                 // update all weights connecting to the neuron
@@ -206,7 +207,7 @@ void NeuralNetwork::fit(vector<vector<double>>& x, vector<double>& y, int epochs
                     weights[{{layerLevel - 1, j}, {layerLevel, i}}] = testWeight;
                     testPrediction = predict(x[index]);
                     lossDiff = MSE(testPrediction, y[index]) - loss;
-                    prevWeight -= loss * lossDiff;
+                    prevWeight -= learningRate * loss * lossDiff;
                     weights[{{layerLevel - 1, j}, {layerLevel, i}}] = prevWeight;
                 }
             }
