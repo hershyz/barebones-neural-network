@@ -1,12 +1,9 @@
 # barebones-neural-network
-Barebones, performance-oriented neural network & backpropagation algorithm in &lt; 250 lines of pure C++.
+Performance-oriented sequential neural networks and ML-tuned dataframes in < 350 lines of pure C++.
 
 <br>
 
-### Diagram:
-![Diagram](https://raw.githubusercontent.com/hershyz/barebones-neural-network/main/diagram.png)
-
-### Example Usage:
+### Example Usage w/ Raw 2D Vectors:
 ```C++
 // required imports
 #include <vector>
@@ -43,6 +40,43 @@ Output:
 -0.0957723
 ```
 **NOTE:** Normalizing each input feature as done above almost always yields faster loss convergence due to the [sigmoid activation function's](https://en.wikipedia.org/wiki/Sigmoid_function) sensitivity to extreme neuron activations. Typically, this is achieved by subtracting the feature mean from each input value.
+
+<br>
+
+### Diagram:
+<img src="https://raw.githubusercontent.com/hershyz/barebones-sequential/main/diagram.png" width="750px"/>
+
+<br>
+
+### Example Usage w/ Dataframes:
+```C++
+// required imports
+#include <vector>
+#include "NeuralNetwork.cpp"
+#include "Dataframe.cpp"
+```
+```C++
+// parse csv, shuffle training data, get x and y dataframes
+vector<vector<double>> matrix = raw2D("training-data/iris-cleaned.csv");
+shuffle2D(matrix);
+vector<vector<double>> x = isolateX(matrix);
+vector<double> y = isolateY(matrix);
+
+// normalize input data
+vector<double> columnMeans = getColumnMeans(x);
+normalize2D(x, columnMeans);
+
+// construct fit network (10000 epochs)
+vector<int> layers = {4, 3};
+NeuralNetwork nn = NeuralNetwork(layers);
+nn.fit(x, y, 10000);
+
+// make predictions
+cout << "-------" << endl;
+vector<double> setosa = {5.1, 3.5, 1.4, 0.2};
+normalize1D(setosa, columnMeans);
+cout << nn.predict(setosa) << endl;
+```
 
 <br>
 
