@@ -1,4 +1,4 @@
-# barebones-neural-network
+# barebones-sequential
 Performance-oriented sequential neural networks and ML-tuned dataframes in < 350 lines of pure C++.
 
 <br>
